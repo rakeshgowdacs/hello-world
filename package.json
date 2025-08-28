@@ -1,0 +1,44 @@
+{
+  "name": "space",
+  "version": "1.0.0",
+  "description": "Cypress BDD framework with Allure reporting and utilities",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf reports cypress/screenshots cypress/videos",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "report:generate": "allure generate --clean $(cat reports/.last-run)/allure-results -o $(cat reports/.last-run)/allure-report",
+    "report:open": "allure open $(cat reports/.last-run)/allure-report | cat",
+    "test": "npm run cypress:run && npm run report:generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rakeshgowdacs/hello-world.git"
+  },
+  "keywords": [
+    "cypress",
+    "bdd",
+    "cucumber",
+    "allure"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rakeshgowdacs/hello-world/issues"
+  },
+  "homepage": "https://github.com/rakeshgowdacs/hello-world#readme",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "@types/node": "^24.3.0",
+    "allure-commandline": "^2.34.1",
+    "cross-env": "^10.0.0",
+    "cypress": "^15.0.0",
+    "dotenv": "^17.2.1",
+    "esbuild": "^0.25.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
