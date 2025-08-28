@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 Cypress.Commands.add("step", (name, fn) => {
   if (typeof (cy).allure === "function") {
     (cy).allure().step(name);
