@@ -1,6 +1,5 @@
 const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
 const { LoginPage, DashboardPage } = require("../../support/pages");
-const { dataManager } = require("../../support/utils/dataManager");
 const { testContext } = require("../../support/utils/testContext");
 const { AssertionHelper } = require("../../support/utils/assertionHelper");
 
@@ -10,8 +9,8 @@ const dashboardPage = new DashboardPage();
 Given("I am on the login page", () => {
   loginPage.navigateToLogin();
   
-  // Store expected page title from data
-  const expectedTitle = dataManager.getExpectedText('login', 'pageTitle');
+  // Store expected page title from page class
+  const expectedTitle = loginPage.expectedTexts.pageTitle;
   testContext.set('login_page_title_expected', expectedTitle);
   
   // Get actual page title and store for assertion
@@ -25,7 +24,7 @@ Given("I am on the login page", () => {
 });
 
 When("I login with user id {string} and no password", (userId) => {
-  const user = dataManager.getUserById(userId);
+  const user = loginPage.getUserById(userId);
   if (!user) {
     throw new Error(`User with ID '${userId}' not found in test data`);
   }
@@ -44,8 +43,8 @@ Then("I should see the dashboard", () => {
   // Get stored user data
   const currentUser = testContext.get('current_user');
   
-  // Store expected dashboard title
-  const expectedDashboardTitle = dataManager.getExpectedText('dashboard', 'dashboardTitle');
+  // Store expected dashboard title from page class
+  const expectedDashboardTitle = dashboardPage.expectedTexts.dashboardTitle;
   testContext.set('dashboard_title_expected', expectedDashboardTitle);
   
   // Verify dashboard and store actual title
@@ -64,7 +63,7 @@ Then("I should see the dashboard", () => {
 
 // Data-driven test scenarios
 Given("I have valid login credentials", () => {
-  const validUsers = dataManager.getValidUsers();
+  const validUsers = loginPage.getValidUsers();
   expect(validUsers.length).to.be.greaterThan(0);
   
   // Store valid users for later use
@@ -91,7 +90,7 @@ Then("I should be successfully logged in", () => {
 });
 
 Given("I have invalid login credentials", () => {
-  const invalidUsers = dataManager.getInvalidUsers();
+  const invalidUsers = loginPage.getInvalidUsers();
   expect(invalidUsers.length).to.be.greaterThan(0);
   
   // Store invalid users for later use

@@ -11,8 +11,102 @@ class OrderPage extends BasePage {
     return dataManager.getUrl('order', 'placeOrderPage');
   }
 
+  // Selectors directly in the page class - following POM best practices
   get selectors() {
-    return this.pageData.selectors;
+    return {
+      orderForm: '[data-testid="order-form"]',
+      productSelect: '[data-testid="product-select"]',
+      quantityInput: '[data-testid="quantity-input"]',
+      orderTypeSelect: '[data-testid="order-type-select"]',
+      shippingAddressSelect: '[data-testid="shipping-address-select"]',
+      placeOrderButton: '[data-testid="place-order-button"]',
+      orderConfirmation: '[data-testid="order-confirmation"]',
+      orderNumber: '[data-testid="order-number"]',
+      orderHistoryLink: '[data-testid="order-history-link"]',
+      searchOrderInput: '[data-testid="search-order-input"]',
+      searchButton: '[data-testid="search-button"]',
+      orderHistoryTable: '[data-testid="order-history-table"]',
+      orderRow: '[data-testid="order-row"]',
+      orderStatus: '[data-testid="order-status"]'
+    };
+  }
+
+  // Expected texts directly in the page class
+  get expectedTexts() {
+    return {
+      orderConfirmationTitle: 'Order Confirmed',
+      orderPlacedMessage: 'Your order has been placed successfully',
+      orderHistoryTitle: 'Order History',
+      searchPlaceholder: 'Search by order number, product, or date'
+    };
+  }
+
+  // Order types directly in the page class
+  get orderTypes() {
+    return [
+      {
+        id: 'standard',
+        name: 'Standard Order',
+        description: 'Regular order with standard shipping',
+        shippingTime: '3-5 business days'
+      },
+      {
+        id: 'express',
+        name: 'Express Order',
+        description: 'Fast order with express shipping',
+        shippingTime: '1-2 business days'
+      },
+      {
+        id: 'overnight',
+        name: 'Overnight Order',
+        description: 'Urgent order with overnight shipping',
+        shippingTime: 'Next business day'
+      }
+    ];
+  }
+
+  // Products directly in the page class
+  get products() {
+    return [
+      {
+        id: 'PROD001',
+        name: 'Test Product 1',
+        price: 29.99,
+        quantity: 2,
+        category: 'Electronics'
+      },
+      {
+        id: 'PROD002',
+        name: 'Test Product 2',
+        price: 49.99,
+        quantity: 1,
+        category: 'Clothing'
+      }
+    ];
+  }
+
+  // Shipping addresses directly in the page class
+  get shippingAddresses() {
+    return [
+      {
+        id: 'home',
+        type: 'Home Address',
+        street: '123 Test Street',
+        city: 'Test City',
+        state: 'TS',
+        zipCode: '12345',
+        country: 'USA'
+      },
+      {
+        id: 'office',
+        type: 'Office Address',
+        street: '456 Business Ave',
+        city: 'Business City',
+        state: 'BC',
+        zipCode: '67890',
+        country: 'USA'
+      }
+    ];
   }
 
   /**
@@ -26,7 +120,7 @@ class OrderPage extends BasePage {
    * Select product for order
    */
   selectProduct(productId) {
-    const product = this.pageData.products.find(p => p.id === productId);
+    const product = this.products.find(p => p.id === productId);
     if (!product) {
       throw new Error(`Product with ID '${productId}' not found`);
     }
@@ -53,7 +147,7 @@ class OrderPage extends BasePage {
    * Select order type
    */
   selectOrderType(orderTypeId) {
-    const orderType = this.pageData.orderTypes.find(ot => ot.id === orderTypeId);
+    const orderType = this.orderTypes.find(ot => ot.id === orderTypeId);
     if (!orderType) {
       throw new Error(`Order type with ID '${orderTypeId}' not found`);
     }
@@ -69,7 +163,7 @@ class OrderPage extends BasePage {
    * Select shipping address
    */
   selectShippingAddress(addressId) {
-    const address = this.pageData.shippingAddresses.find(a => a.id === addressId);
+    const address = this.shippingAddresses.find(a => a.id === addressId);
     if (!address) {
       throw new Error(`Shipping address with ID '${addressId}' not found`);
     }

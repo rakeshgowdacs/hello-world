@@ -11,8 +11,48 @@ class DashboardPage extends BasePage {
     return dataManager.getUrl('dashboard', 'dashboardPage');
   }
 
+  // Selectors directly in the page class - following POM best practices
   get selectors() {
-    return this.pageData.selectors;
+    return {
+      dashboardTitle: 'h1, .dashboard-title, [data-testid="dashboard-title"]',
+      welcomeMessage: '.welcome-message, .user-greeting, [data-testid="welcome"]',
+      navigationMenu: '.nav-menu, .sidebar, [data-testid="navigation"]',
+      logoutButton: '.logout-btn, .signout-btn, [data-testid="logout"]',
+      userProfile: '.user-profile, .profile-info, [data-testid="profile"]',
+      quickActions: '.quick-actions, .action-buttons, [data-testid="actions"]'
+    };
+  }
+
+  // Expected texts directly in the page class
+  get expectedTexts() {
+    return {
+      dashboardTitle: 'Dashboard',
+      welcomeMessage: 'Welcome',
+      navigationMenu: 'Navigation Menu',
+      userProfile: 'User Profile',
+      quickActions: 'Quick Actions'
+    };
+  }
+
+  // Navigation items directly in the page class
+  get navigationItems() {
+    return [
+      'Dashboard',
+      'Users',
+      'Reports',
+      'Settings',
+      'Profile'
+    ];
+  }
+
+  // Quick action buttons directly in the page class
+  get quickActionButtons() {
+    return [
+      'Create User',
+      'Generate Report',
+      'View Analytics',
+      'Export Data'
+    ];
   }
 
   /**
@@ -37,10 +77,10 @@ class DashboardPage extends BasePage {
   }
 
   /**
-   * Verify dashboard title matches expected from data
+   * Verify dashboard title matches expected from page class
    */
-  verifyDashboardTitleFromData() {
-    const expectedTitle = dataManager.getExpectedText('dashboard', 'dashboardTitle');
+  verifyDashboardTitleFromClass() {
+    const expectedTitle = this.expectedTexts.dashboardTitle;
     return this.verifyDashboardTitle(expectedTitle);
   }
 
@@ -98,25 +138,10 @@ class DashboardPage extends BasePage {
   }
 
   /**
-   * Get navigation items from data
-   */
-  getNavigationItems() {
-    return dataManager.getPageData('dashboard', 'navigationItems');
-  }
-
-  /**
-   * Get quick action buttons from data
-   */
-  getQuickActionButtons() {
-    return dataManager.getPageData('dashboard', 'quickActionButtons');
-  }
-
-  /**
    * Verify all navigation items are present
    */
   verifyNavigationItems() {
-    const expectedItems = this.getNavigationItems();
-    expectedItems.forEach(item => {
+    this.navigationItems.forEach(item => {
       cy.contains(item).should('be.visible');
     });
   }
@@ -125,8 +150,7 @@ class DashboardPage extends BasePage {
    * Verify all quick action buttons are present
    */
   verifyQuickActionButtons() {
-    const expectedButtons = this.getQuickActionButtons();
-    expectedButtons.forEach(button => {
+    this.quickActionButtons.forEach(button => {
       cy.contains(button).should('be.visible');
     });
   }

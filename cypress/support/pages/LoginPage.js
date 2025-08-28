@@ -11,8 +11,37 @@ class LoginPage extends BasePage {
     return dataManager.getUrl('login', 'loginPage');
   }
 
+  // ✅ SELECTORS IN PAGE CLASS - Following POM best practices
+  // This encapsulates the page structure and makes it easy to maintain
   get selectors() {
-    return this.pageData.selectors;
+    return {
+      usernameInput: 'input[name="username"], input#username, input[placeholder*="User" i]',
+      passwordInput: 'input[type="password"], input[name="password"], input#password',
+      loginButton: 'button[type="submit"], button:contains("Login"), input[type="submit"]',
+      errorMessage: '.error-message, .alert-error, [data-testid="error"]',
+      successMessage: '.success-message, .alert-success, [data-testid="success"]',
+      pageTitle: 'h1, .page-title, [data-testid="page-title"]'
+    };
+  }
+
+  // ✅ EXPECTED TEXTS IN PAGE CLASS - UI elements that don't change often
+  get expectedTexts() {
+    return {
+      pageTitle: 'Login',
+      usernameLabel: 'Username',
+      passwordLabel: 'Password',
+      loginButtonText: 'Login'
+    };
+  }
+
+  // ✅ TEST DATA FROM JSON - User credentials, test scenarios, etc.
+  // This allows non-technical team members to update test data
+  get validUsers() {
+    return this.pageData.validUsers;
+  }
+
+  get invalidUsers() {
+    return this.pageData.invalidUsers;
   }
 
   /**
@@ -93,10 +122,10 @@ class LoginPage extends BasePage {
   }
 
   /**
-   * Verify page title matches expected from data
+   * Verify page title matches expected from page class
    */
-  verifyPageTitleFromData() {
-    const expectedTitle = dataManager.getExpectedText('login', 'pageTitle');
+  verifyPageTitleFromClass() {
+    const expectedTitle = this.expectedTexts.pageTitle;
     return this.verifyPageTitle(expectedTitle);
   }
 
@@ -104,21 +133,22 @@ class LoginPage extends BasePage {
    * Get valid users for testing
    */
   getValidUsers() {
-    return dataManager.getValidUsers();
+    return this.validUsers;
   }
 
   /**
    * Get invalid users for testing
    */
   getInvalidUsers() {
-    return dataManager.getInvalidUsers();
+    return this.invalidUsers;
   }
 
   /**
    * Get user by ID
    */
   getUserById(userId) {
-    return dataManager.getUserById(userId);
+    const allUsers = [...this.validUsers, ...this.invalidUsers];
+    return allUsers.find(user => user.id === userId);
   }
 }
 
