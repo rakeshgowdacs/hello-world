@@ -9,7 +9,16 @@
     "cypress:run": "cypress run",
     "report:generate": "allure generate --clean $(cat reports/.last-run)/allure-results -o $(cat reports/.last-run)/allure-report",
     "report:open": "allure open $(cat reports/.last-run)/allure-report | cat",
-    "test": "npm run cypress:run && npm run report:generate"
+    "test": "npm run cypress:run && npm run report:generate",
+    "test:full": "npm run cypress:run && npm run report:generate && npm run report:open",
+    "test:login": "NODE_ENV=dev npx cypress run --spec \"cypress/e2e/login/login.feature\" && npm run report:generate && npm run report:open",
+    "test:order": "NODE_ENV=dev npx cypress run --spec \"cypress/e2e/order/orderFlow.feature\" && npm run report:generate && npm run report:open",
+    "test:all": "NODE_ENV=dev npx cypress run && npm run report:generate && npm run report:open",
+    "test:qa": "NODE_ENV=qa npx cypress run && npm run report:generate && npm run report:open",
+    "test:dev": "NODE_ENV=dev npx cypress run && npm run report:generate && npm run report:open",
+    "auto:test": "npm run clean && npm run test:full",
+    "auto:login": "npm run clean && npm run test:login",
+    "auto:order": "npm run clean && npm run test:order"
   },
   "keywords": [
     "cypress",
