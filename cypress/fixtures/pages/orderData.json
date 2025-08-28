@@ -1,0 +1,90 @@
+{
+  "orderTypes": [
+    {
+      "id": "standard",
+      "name": "Standard Order",
+      "description": "Regular order with standard shipping",
+      "shippingTime": "3-5 business days"
+    },
+    {
+      "id": "express",
+      "name": "Express Order",
+      "description": "Fast order with express shipping",
+      "shippingTime": "1-2 business days"
+    },
+    {
+      "id": "overnight",
+      "name": "Overnight Order",
+      "description": "Urgent order with overnight shipping",
+      "shippingTime": "Next business day"
+    }
+  ],
+  "products": [
+    {
+      "id": "PROD001",
+      "name": "Test Product 1",
+      "price": 29.99,
+      "quantity": 2,
+      "category": "Electronics"
+    },
+    {
+      "id": "PROD002",
+      "name": "Test Product 2",
+      "price": 49.99,
+      "quantity": 1,
+      "category": "Clothing"
+    }
+  ],
+  "shippingAddresses": [
+    {
+      "id": "home",
+      "type": "Home Address",
+      "street": "123 Test Street",
+      "city": "Test City",
+      "state": "TS",
+      "zipCode": "12345",
+      "country": "USA"
+    },
+    {
+      "id": "office",
+      "type": "Office Address",
+      "street": "456 Business Ave",
+      "city": "Business City",
+      "state": "BC",
+      "zipCode": "67890",
+      "country": "USA"
+    }
+  ],
+  "selectors": {
+    "orderForm": "[data-testid='order-form']",
+    "productSelect": "[data-testid='product-select']",
+    "quantityInput": "[data-testid='quantity-input']",
+    "orderTypeSelect": "[data-testid='order-type-select']",
+    "shippingAddressSelect": "[data-testid='shipping-address-select']",
+    "placeOrderButton": "[data-testid='place-order-button']",
+    "orderConfirmation": "[data-testid='order-confirmation']",
+    "orderNumber": "[data-testid='order-number']",
+    "orderHistoryLink": "[data-testid='order-history-link']",
+    "searchOrderInput": "[data-testid='search-order-input']",
+    "searchButton": "[data-testid='search-button']",
+    "orderHistoryTable": "[data-testid='order-history-table']",
+    "orderRow": "[data-testid='order-row']",
+    "orderStatus": "[data-testid='order-status']"
+  },
+  "expectedTexts": {
+    "orderConfirmationTitle": "Order Confirmed",
+    "orderPlacedMessage": "Your order has been placed successfully",
+    "orderHistoryTitle": "Order History",
+    "searchPlaceholder": "Search by order number, product, or date"
+  },
+  "urls": {
+    "placeOrderPage": "/orders/place",
+    "orderHistoryPage": "/orders/history",
+    "orderConfirmationPage": "/orders/confirmation"
+  },
+  "timeouts": {
+    "orderProcessing": 30000,
+    "orderSearch": 15000,
+    "pageLoad": 20000
+  }
+}

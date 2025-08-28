@@ -1,6 +1,6 @@
-# Space - Cypress BDD Automation Framework
+# Space - Cypress BDD Automation Framework (JavaScript)
 
-A robust Cypress automation framework with BDD (Behavior Driven Development), Allure reporting, Page Object Model, Test Context Manager, and comprehensive utilities built with a DRY (Don't Repeat Yourself) approach.
+A robust Cypress automation framework with BDD (Behavior Driven Development), Allure reporting, Page Object Model, Test Context Manager, and comprehensive utilities built with a DRY (Don't Repeat Yourself) approach - **100% JavaScript Implementation**.
 
 ## 🚀 Features
 
@@ -15,7 +15,7 @@ A robust Cypress automation framework with BDD (Behavior Driven Development), Al
 - **API Testing Scaffold**: Ready structure for API testing with schema validation
 - **Data-Driven Testing**: Support for fixtures and parameterized tests
 - **Custom Commands**: Reusable commands for common operations
-- **TypeScript Support**: Full type safety and IntelliSense
+- **JavaScript Support**: Full ES6+ support with modern syntax
 
 ## 📁 Project Structure
 
@@ -25,10 +25,10 @@ space/
 │   ├── e2e/
 │   │   ├── login/
 │   │   │   ├── login.feature          # BDD feature file
-│   │   │   └── login.steps.ts         # Step definitions
+│   │   │   └── login.steps.js         # Step definitions
 │   │   ├── order/
 │   │   │   ├── orderFlow.feature      # Order flow feature
-│   │   │   └── orderFlow.steps.ts     # Order flow steps
+│   │   │   └── orderFlow.steps.js     # Order flow steps
 │   │   └── api/
 │   │       └── schema.readme.md       # API testing guide
 │   ├── fixtures/
@@ -38,27 +38,26 @@ space/
 │   │       ├── orderData.json         # Order page data
 │   │       └── commonData.json        # Shared data
 │   └── support/
-│       ├── e2e.ts                     # Global support file
-│       ├── commands.ts                 # Custom commands
+│       ├── e2e.js                     # Global support file
+│       ├── commands.js                 # Custom commands
 │       ├── pages/
-│       │   ├── BasePage.ts            # Abstract base page
-│       │   ├── CommonPage.ts          # Shared page functionality
-│       │   ├── LoginPage.ts           # Login page object
-│       │   ├── DashboardPage.ts       # Dashboard page object
-│       │   ├── OrderPage.ts           # Order page object
-│       │   └── index.ts               # Page exports
+│       │   ├── BasePage.js            # Abstract base page
+│       │   ├── CommonPage.js          # Shared page functionality
+│       │   ├── LoginPage.js           # Login page object
+│       │   ├── DashboardPage.js       # Dashboard page object
+│       │   ├── OrderPage.js           # Order page object
+│       │   └── index.js               # Page exports
 │       └── utils/
-│           ├── data.ts                 # Data utilities
-│           ├── date.ts                 # Date utilities
-│           ├── dataManager.ts          # Page data manager
-│           ├── testContext.ts          # Test context manager
-│           ├── assertionHelper.ts      # Assertion utilities
-│           └── index.ts                # Utility exports
+│           ├── data.js                 # Data utilities
+│           ├── date.js                 # Date utilities
+│           ├── dataManager.js          # Page data manager
+│           ├── testContext.js          # Test context manager
+│           ├── assertionHelper.js      # Assertion utilities
+│           └── index.js                # Utility exports
 ├── reports/                            # Test run reports (auto-generated)
 ├── .env.dev                           # Development environment config
 ├── .env.qa                            # QA environment config
-├── cypress.config.ts                  # Cypress configuration
-├── tsconfig.json                      # TypeScript configuration
+├── cypress.config.js                  # Cypress configuration
 └── package.json                       # Dependencies and scripts
 ```
 
@@ -130,34 +129,40 @@ npm run report:open
 ## 🏗️ Page Object Model (POM)
 
 ### Base Page Class
-```typescript
-export abstract class BasePage {
-  protected abstract readonly url: string;
-  protected abstract readonly selectors: Record<string, string>;
+```javascript
+class BasePage {
+  constructor() {
+    if (this.constructor === BasePage) {
+      throw new Error("BasePage is abstract and cannot be instantiated");
+    }
+  }
 
   // Common methods for all pages
-  visit(): Cypress.Chainable<Cypress.AUTWindow>
-  getElement(selectorName: string): Cypress.Chainable<JQuery<HTMLElement>>
-  clickElement(selectorName: string): Cypress.Chainable<JQuery<HTMLElement>>
-  typeText(selectorName: string, text: string): Cypress.Chainable<JQuery<HTMLElement>>
+  visit() { return cy.visit(this.url); }
+  getElement(selectorName) { /* implementation */ }
+  clickElement(selectorName) { /* implementation */ }
+  typeText(selectorName, text) { /* implementation */ }
   // ... more methods
 }
 ```
 
 ### Page-Specific Implementation
-```typescript
-export class LoginPage extends BasePage {
-  private readonly pageData = dataManager.getLoginData();
+```javascript
+class LoginPage extends BasePage {
+  constructor() {
+    super();
+    this.pageData = dataManager.getLoginData();
+  }
 
-  protected get url(): string {
+  get url() {
     return dataManager.getUrl('login', 'loginPage');
   }
 
-  protected get selectors(): Record<string, string> {
+  get selectors() {
     return this.pageData.selectors;
   }
 
-  loginWithUsernameOnly(username: string): void {
+  loginWithUsernameOnly(username) {
     this.navigateToLogin();
     this.waitForPageLoad();
     this.enterUsername(username);
@@ -169,8 +174,8 @@ export class LoginPage extends BasePage {
 ## 🔄 Test Context Manager
 
 ### Store and Retrieve Data
-```typescript
-import { testContext } from "@support/utils/testContext";
+```javascript
+const { testContext } = require("../../support/utils/testContext");
 
 // Store data
 testContext.set('order_number', 'ORD123');
@@ -187,7 +192,7 @@ if (testContext.has('order_number')) {
 ```
 
 ### Data Persistence Across Steps
-```typescript
+```javascript
 // Step 1: Place order
 When("I place an order", () => {
   orderPage.placeOrder().then((orderNumber) => {
@@ -205,8 +210,8 @@ When("I search for the order", () => {
 ## ✅ Assertion Helper
 
 ### Store and Assert
-```typescript
-import { AssertionHelper } from "@support/utils/assertionHelper";
+```javascript
+const { AssertionHelper } = require("../../support/utils/assertionHelper");
 
 // Store actual and expected, then assert
 AssertionHelper.assertAndStore('page_title', actualTitle, expectedTitle);
@@ -219,7 +224,7 @@ AssertionHelper.assertStoredValues('user_name');
 ```
 
 ### Specialized Assertions
-```typescript
+```javascript
 // Page title assertion
 AssertionHelper.assertPageTitle('login', actualTitle, expectedTitle);
 
@@ -258,12 +263,12 @@ Feature: Order Management Flow
 
 ### Step Definitions
 
-Create corresponding `.steps.ts` files:
+Create corresponding `.js` files:
 
-```typescript
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import { OrderPage } from "@support/pages";
-import { testContext } from "@support/utils/testContext";
+```javascript
+const { Given, When, Then } = require("@badeball/cypress-cucumber-preprocessor");
+const { OrderPage } = require("../../support/pages");
+const { testContext } = require("../../support/utils/testContext");
 
 const orderPage = new OrderPage();
 
@@ -330,8 +335,8 @@ When("I place an order with the following details:", (dataTable) => {
 ```
 
 ### Data Manager Usage
-```typescript
-import { dataManager } from "@support/utils/dataManager";
+```javascript
+const { dataManager } = require("../../support/utils/dataManager");
 
 // Get page data
 const loginData = dataManager.getLoginData();
@@ -349,22 +354,14 @@ const validUsers = dataManager.getValidUsers();
 
 - **`cy.step(name, fn)`**: Creates Allure steps with screenshots
 - **`cy.login(username, password?)`**: Handles login flow
-- **`cy.usePageObject<T>(pageClass)`**: Easy page object instantiation
+- **`cy.usePageObject(pageClass)`**: Easy page object instantiation
 
 ### Creating Custom Commands
 
-Add new commands in `cypress/support/commands.ts`:
+Add new commands in `cypress/support/commands.js`:
 
-```typescript
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      myCustomCommand(param: string): Chainable;
-    }
-  }
-}
-
-Cypress.Commands.add("myCustomCommand", (param: string) => {
+```javascript
+Cypress.Commands.add("myCustomCommand", (param) => {
   // Your custom logic here
   cy.log(`Executing custom command with: ${param}`);
 });
@@ -463,8 +460,7 @@ Feature: API Testing
 1. **Cypress not found**: Run `npx cypress verify`
 2. **Environment not loading**: Check `.env.dev` or `.env.qa` files
 3. **Allure report not generating**: Ensure `allure-commandline` is installed
-4. **TypeScript errors**: Run `npx tsc --noEmit` to check types
-5. **Test context not persisting**: Ensure you're using the same test context instance
+4. **Test context not persisting**: Ensure you're using the same test context instance
 
 ### Debug Mode
 
@@ -475,7 +471,7 @@ DEBUG=cypress:* npm run cypress:run
 
 ### Inspect Test Context
 
-```typescript
+```javascript
 // Log all stored data
 cy.log('Stored data:', JSON.stringify(testContext.getAll(), null, 2));
 
@@ -498,7 +494,7 @@ npx cypress verify
 - [Cypress Documentation](https://docs.cypress.io/)
 - [Cucumber BDD](https://cucumber.io/docs/bdd/)
 - [Allure Framework](https://docs.qameta.io/allure/)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [JavaScript ES6+ Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/)
 
 ## 🤝 Contributing
@@ -506,12 +502,20 @@ npx cypress verify
 1. Follow the existing code structure
 2. Add tests for new features
 3. Update documentation as needed
-4. Use TypeScript for type safety
+4. Use JavaScript ES6+ features
 5. Follow Page Object Model patterns
 6. Use Test Context Manager for data persistence
 
+## 🎉 What's New in JavaScript Version
+
+- **100% JavaScript**: No TypeScript dependencies
+- **ES6+ Features**: Modern JavaScript syntax and features
+- **CommonJS Modules**: Standard Node.js module system
+- **Simplified Setup**: Easier to get started and maintain
+- **Same Functionality**: All features from TypeScript version preserved
+
 ---
 
-**Framework**: Space  
+**Framework**: Space (JavaScript Edition)  
 **Version**: 1.0.0  
 **Last Updated**: August 2025
