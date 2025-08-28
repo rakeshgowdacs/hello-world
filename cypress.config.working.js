@@ -2,7 +2,6 @@ const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
 const allureWriter = require("@shelex/cypress-allure-plugin/writer");
-const allureReporter = require("@shelex/cypress-allure-plugin/reporter");
 const dotenv = require("dotenv");
 
 // Load environment variables
