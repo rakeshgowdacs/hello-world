@@ -1,0 +1,13 @@
+{
+  "stepDefinitions": "cypress/e2e/features/step_definitions",
+  "cucumberJson": {
+    "generate": true,
+    "outputFolder": "cypress/cucumber-json",
+    "filePrefix": "",
+    "fileSuffix": ".cucumber"
+  },
+  "nonGlobalStepDefinitions": false,
+  "filterSpecs": false,
+  "omitFiltered": false,
+  "commonPath": "cypress/e2e/features"
+}

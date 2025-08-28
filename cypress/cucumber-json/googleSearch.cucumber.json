@@ -1,0 +1,247 @@
+[
+  {
+    "description": "  As a user\n  I want to search for information on Google\n  So that I can find relevant results",
+    "keyword": "Feature",
+    "name": "Google Search Functionality",
+    "line": 1,
+    "id": "google-search-functionality",
+    "tags": [],
+    "uri": "googleSearch.feature",
+    "elements": [
+      {
+        "id": "google-search-functionality;perform-a-basic-search-on-google",
+        "keyword": "Scenario",
+        "line": 10,
+        "name": "Perform a basic search on Google",
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 9
+          },
+          {
+            "name": "@regression",
+            "line": 9
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "I navigate to Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 2970000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 11,
+            "name": "I am on the Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 33000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "I enter \"Cypress Automation Testing\" in the search box",
+            "result": {
+              "status": "passed",
+              "duration": 517000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "I click the search button",
+            "result": {
+              "status": "passed",
+              "duration": 2873000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "I should see search results",
+            "result": {
+              "status": "failed",
+              "duration": 10092000000,
+              "error_message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#search`, but never found it.\n    at Context.eval (cypress/e2e/features/step_definitions/common.js:24:20)\n    at Context.resolveAndRunStepDefinition (node_modules/cypress-cucumber-preprocessor/lib/resolveStepDefinition.js:193:0)\n    at Context.eval (node_modules/cypress-cucumber-preprocessor/lib/createTestFromScenario.js:27:0)\n    at getRet (https://www.google.com/__cypress/runner/cypress_runner.js:120768:20)\n    at tryCatcher (https://www.google.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://www.google.com/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (https://www.google.com/__cypress/runner/cypress_runner.js:120779:66)\n    at Context.then (https://www.google.com/__cypress/runner/cypress_runner.js:121030:21)\n    at wrapped (https://www.google.com/__cypress/runner/cypress_runner.js:141618:19)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "the search results should contain \"Cypress\"",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I should see search statistics",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "id": "google-search-functionality;verify-google-home-page-elements",
+        "keyword": "Scenario",
+        "line": 19,
+        "name": "Verify Google home page elements",
+        "tags": [
+          {
+            "name": "@regression",
+            "line": 18
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "I navigate to Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 2528000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 20,
+            "name": "I am on the Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 26000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 21,
+            "name": "I should see the Google logo",
+            "result": {
+              "status": "failed",
+              "error_message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `img[alt=\"Google\"]`, but never found it.\n    at Context.eval (cypress/e2e/features/step_definitions/common.js:36:30)\n    at Context.resolveAndRunStepDefinition (node_modules/cypress-cucumber-preprocessor/lib/resolveStepDefinition.js:193:0)\n    at Context.eval (node_modules/cypress-cucumber-preprocessor/lib/createTestFromScenario.js:27:0)\n    at getRet (https://www.google.com/__cypress/runner/cypress_runner.js:120768:20)\n    at tryCatcher (https://www.google.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://www.google.com/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (https://www.google.com/__cypress/runner/cypress_runner.js:120779:66)\n    at Context.then (https://www.google.com/__cypress/runner/cypress_runner.js:121030:21)\n    at wrapped (https://www.google.com/__cypress/runner/cypress_runner.js:141618:19)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "I should see the search box",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "I should see the \"Google Search\" button",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "I should see the \"I'm Feeling Lucky\" button",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "id": "google-search-functionality;search-with-different-terms",
+        "keyword": "Scenario",
+        "line": 27,
+        "name": "Search with different terms",
+        "tags": [
+          {
+            "name": "@regression",
+            "line": 26
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "I navigate to Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 2507000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 28,
+            "name": "I am on the Google home page",
+            "result": {
+              "status": "passed",
+              "duration": 52000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 29,
+            "name": "I enter \"Space Automation Framework\" in the search box",
+            "result": {
+              "status": "passed",
+              "duration": 906000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 30,
+            "name": "I click the search button",
+            "result": {
+              "status": "passed",
+              "duration": 2150000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 31,
+            "name": "I should see search results",
+            "result": {
+              "status": "failed",
+              "error_message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#search`, but never found it.\n    at Context.eval (cypress/e2e/features/step_definitions/common.js:24:20)\n    at Context.resolveAndRunStepDefinition (node_modules/cypress-cucumber-preprocessor/lib/resolveStepDefinition.js:193:0)\n    at Context.eval (node_modules/cypress-cucumber-preprocessor/lib/createTestFromScenario.js:27:0)\n    at getRet (https://www.google.com/__cypress/runner/cypress_runner.js:120768:20)\n    at tryCatcher (https://www.google.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://www.google.com/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (https://www.google.com/__cypress/runner/cypress_runner.js:120779:66)\n    at Context.then (https://www.google.com/__cypress/runner/cypress_runner.js:121030:21)\n    at wrapped (https://www.google.com/__cypress/runner/cypress_runner.js:141618:19)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 32,
+            "name": "I should be on the search results page",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
