@@ -1,0 +1,54 @@
+{
+  "urls": {
+    "homePage": "https://www.google.com",
+    "searchPage": "https://www.google.com/search",
+    "imagesPage": "https://www.google.com/images",
+    "newsPage": "https://www.google.com/news"
+  },
+  "selectors": {
+    "searchBox": {
+      "primary": "textarea[name='q']",
+      "alternative": "input[name='q']"
+    },
+    "searchButton": {
+      "primary": "input[value='Google Search']",
+      "alternative": "button[aria-label='Google Search']"
+    },
+    "logo": "img[alt='Google']",
+    "feelingLuckyButton": "input[value=\"I'm Feeling Lucky\"]"
+  },
+  "testData": {
+    "defaultSearchTerm": "Cypress Automation Testing",
+    "expectedTitle": "Google",
+    "expectedSearchResultsUrl": "/search",
+    "timeouts": {
+      "pageLoad": 30000,
+      "elementWait": 10000,
+      "networkRequest": 5000
+    }
+  },
+  "validation": {
+    "minimumSearchResults": 1,
+    "expectedLogoAlt": "Google",
+    "searchStatsSelector": "#result-stats"
+  },
+  "screenshots": {
+    "quality": 100,
+    "capture": "viewport",
+    "overwrite": false
+  },
+  "environment": {
+    "qa": {
+      "baseUrl": "https://www.google.com",
+      "timeout": 30000
+    },
+    "staging": {
+      "baseUrl": "https://www.google.com",
+      "timeout": 20000
+    },
+    "production": {
+      "baseUrl": "https://www.google.com",
+      "timeout": 15000
+    }
+  }
+}

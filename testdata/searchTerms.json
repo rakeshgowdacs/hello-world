@@ -1,0 +1,51 @@
+{
+  "basicSearchTerms": [
+    "Cypress Automation Testing",
+    "JavaScript Testing Framework",
+    "End to End Testing",
+    "Web Automation Tools"
+  ],
+  "advancedSearchTerms": [
+    "Cypress BDD Cucumber",
+    "Page Object Model Pattern",
+    "Allure Reporting Framework",
+    "Space Automation Framework"
+  ],
+  "negativeSearchTerms": [
+    "asdfghjklqwerty123456",
+    "xyzNonExistentTerm789",
+    "impossibleSearchTerm2023"
+  ],
+  "specialCharacterSearchTerms": [
+    "test@example.com",
+    "C++ programming",
+    "React.js framework",
+    "Node.js development"
+  ],
+  "searchCategories": {
+    "technology": [
+      "artificial intelligence",
+      "machine learning",
+      "blockchain technology",
+      "cloud computing"
+    ],
+    "programming": [
+      "Python programming",
+      "Java development",
+      "JavaScript frameworks",
+      "database design"
+    ],
+    "testing": [
+      "unit testing",
+      "integration testing",
+      "performance testing",
+      "security testing"
+    ]
+  },
+  "testMetadata": {
+    "lastUpdated": "2025-01-28",
+    "version": "1.0.0",
+    "author": "Space Automation Framework",
+    "environment": "qa"
+  }
+}
