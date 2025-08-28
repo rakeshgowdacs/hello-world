@@ -1,15 +1,16 @@
 import { BasePage } from './BasePage';
+import { dataManager } from '../utils/dataManager';
 
 export class LoginPage extends BasePage {
-  protected readonly url = '/';
-  protected readonly selectors = {
-    usernameInput: 'input[name="username"], input#username, input[placeholder*="User" i]',
-    passwordInput: 'input[type="password"], input[name="password"], input#password',
-    loginButton: 'button[type="submit"], button:contains("Login"), input[type="submit"]',
-    errorMessage: '.error-message, .alert-error, [data-testid="error"]',
-    successMessage: '.success-message, .alert-success, [data-testid="success"]',
-    pageTitle: 'h1, .page-title, [data-testid="page-title"]'
-  };
+  private readonly pageData = dataManager.getLoginData();
+
+  protected get url(): string {
+    return dataManager.getUrl('login', 'loginPage');
+  }
+
+  protected get selectors(): Record<string, string> {
+    return this.pageData.selectors;
+  }
 
   /**
    * Navigate to login page
@@ -86,5 +87,34 @@ export class LoginPage extends BasePage {
    */
   verifyPageTitle(expectedTitle: string): Cypress.Chainable<JQuery<HTMLElement>> {
     return this.elementContainsText('pageTitle', expectedTitle);
+  }
+
+  /**
+   * Verify page title matches expected from data
+   */
+  verifyPageTitleFromData(): Cypress.Chainable<JQuery<HTMLElement>> {
+    const expectedTitle = dataManager.getExpectedText('login', 'pageTitle');
+    return this.verifyPageTitle(expectedTitle);
+  }
+
+  /**
+   * Get valid users for testing
+   */
+  getValidUsers(): any[] {
+    return dataManager.getValidUsers();
+  }
+
+  /**
+   * Get invalid users for testing
+   */
+  getInvalidUsers(): any[] {
+    return dataManager.getInvalidUsers();
+  }
+
+  /**
+   * Get user by ID
+   */
+  getUserById(userId: string): any {
+    return dataManager.getUserById(userId);
   }
 }

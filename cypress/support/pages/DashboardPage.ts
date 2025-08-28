@@ -1,15 +1,16 @@
 import { BasePage } from './BasePage';
+import { dataManager } from '../utils/dataManager';
 
 export class DashboardPage extends BasePage {
-  protected readonly url = '/dashboard'; // Adjust based on actual app routing
-  protected readonly selectors = {
-    dashboardTitle: 'h1, .dashboard-title, [data-testid="dashboard-title"]',
-    welcomeMessage: '.welcome-message, .user-greeting, [data-testid="welcome"]',
-    navigationMenu: '.nav-menu, .sidebar, [data-testid="navigation"]',
-    logoutButton: '.logout-btn, .signout-btn, [data-testid="logout"]',
-    userProfile: '.user-profile, .profile-info, [data-testid="profile"]',
-    quickActions: '.quick-actions, .action-buttons, [data-testid="actions"]'
-  };
+  private readonly pageData = dataManager.getDashboardData();
+
+  protected get url(): string {
+    return dataManager.getUrl('dashboard', 'dashboardPage');
+  }
+
+  protected get selectors(): Record<string, string> {
+    return this.pageData.selectors;
+  }
 
   /**
    * Verify dashboard is loaded
@@ -30,6 +31,14 @@ export class DashboardPage extends BasePage {
    */
   verifyDashboardTitle(expectedTitle: string): Cypress.Chainable<JQuery<HTMLElement>> {
     return this.elementContainsText('dashboardTitle', expectedTitle);
+  }
+
+  /**
+   * Verify dashboard title matches expected from data
+   */
+  verifyDashboardTitleFromData(): Cypress.Chainable<JQuery<HTMLElement>> {
+    const expectedTitle = dataManager.getExpectedText('dashboard', 'dashboardTitle');
+    return this.verifyDashboardTitle(expectedTitle);
   }
 
   /**
@@ -83,5 +92,46 @@ export class DashboardPage extends BasePage {
     this.isWelcomeMessageVisible();
     this.verifyWelcomeMessageContainsUsername(username);
     this.isNavigationMenuVisible();
+  }
+
+  /**
+   * Get navigation items from data
+   */
+  getNavigationItems(): string[] {
+    return dataManager.getPageData('dashboard', 'navigationItems');
+  }
+
+  /**
+   * Get quick action buttons from data
+   */
+  getQuickActionButtons(): string[] {
+    return dataManager.getPageData('dashboard', 'quickActionButtons');
+  }
+
+  /**
+   * Verify all navigation items are present
+   */
+  verifyNavigationItems(): void {
+    const expectedItems = this.getNavigationItems();
+    expectedItems.forEach(item => {
+      cy.contains(item).should('be.visible');
+    });
+  }
+
+  /**
+   * Verify all quick action buttons are present
+   */
+  verifyQuickActionButtons(): void {
+    const expectedButtons = this.getQuickActionButtons();
+    expectedButtons.forEach(button => {
+      cy.contains(button).should('be.visible');
+    });
+  }
+
+  /**
+   * Get timeout for page load
+   */
+  getPageLoadTimeout(): number {
+    return dataManager.getTimeout('dashboard', 'pageLoad');
   }
 }

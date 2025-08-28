@@ -1,15 +1,16 @@
 import { BasePage } from './BasePage';
+import { dataManager } from '../utils/dataManager';
 
 export class CommonPage extends BasePage {
-  protected readonly url = '/';
-  protected readonly selectors = {
-    loadingSpinner: '.loading, .spinner, [data-testid="loading"]',
-    notification: '.notification, .toast, [data-testid="notification"]',
-    modal: '.modal, .dialog, [data-testid="modal"]',
-    closeButton: '.close, .close-btn, [data-testid="close"]',
-    confirmButton: '.confirm, .ok-btn, [data-testid="confirm"]',
-    cancelButton: '.cancel, .cancel-btn, [data-testid="cancel"]'
-  };
+  private readonly pageData = dataManager.getCommonData();
+
+  protected get url(): string {
+    return '/';
+  }
+
+  protected get selectors(): Record<string, string> {
+    return this.pageData.commonSelectors;
+  }
 
   /**
    * Wait for loading to complete
@@ -63,15 +64,17 @@ export class CommonPage extends BasePage {
   /**
    * Wait for element to be visible with timeout
    */
-  waitForElement(selectorName: string, timeout: number = 10000): Cypress.Chainable<JQuery<HTMLElement>> {
-    return this.getElement(selectorName).should('be.visible', { timeout });
+  waitForElement(selectorName: string, timeout?: number): Cypress.Chainable<JQuery<HTMLElement>> {
+    const defaultTimeout = timeout || dataManager.getPageData('common', 'timeouts.default');
+    return this.getElement(selectorName).should('be.visible', { timeout: defaultTimeout });
   }
 
   /**
    * Wait for element to contain text with timeout
    */
-  waitForElementText(selectorName: string, text: string, timeout: number = 10000): Cypress.Chainable<JQuery<HTMLElement>> {
-    return this.getElement(selectorName).should('contain.text', text, { timeout });
+  waitForElementText(selectorName: string, text: string, timeout?: number): Cypress.Chainable<JQuery<HTMLElement>> {
+    const defaultTimeout = timeout || dataManager.getPageData('common', 'timeouts.default');
+    return this.getElement(selectorName).should('contain.text', text, { timeout: defaultTimeout });
   }
 
   /**
@@ -86,5 +89,69 @@ export class CommonPage extends BasePage {
    */
   hoverOverElement(selectorName: string): Cypress.Chainable<JQuery<HTMLElement>> {
     return this.getElement(selectorName).trigger('mouseover');
+  }
+
+  /**
+   * Get default timeout
+   */
+  getDefaultTimeout(): number {
+    return dataManager.getPageData('common', 'timeouts.default');
+  }
+
+  /**
+   * Get short timeout
+   */
+  getShortTimeout(): number {
+    return dataManager.getPageData('common', 'timeouts.short');
+  }
+
+  /**
+   * Get long timeout
+   */
+  getLongTimeout(): number {
+    return dataManager.getPageData('common', 'timeouts.long');
+  }
+
+  /**
+   * Get page load timeout
+   */
+  getPageLoadTimeout(): number {
+    return dataManager.getPageData('common', 'timeouts.pageLoad');
+  }
+
+  /**
+   * Get retry attempts for default operations
+   */
+  getDefaultRetryAttempts(): number {
+    return dataManager.getPageData('common', 'retryAttempts.default');
+  }
+
+  /**
+   * Get retry attempts for network operations
+   */
+  getNetworkRetryAttempts(): number {
+    return dataManager.getPageData('common', 'retryAttempts.network');
+  }
+
+  /**
+   * Get retry attempts for UI operations
+   */
+  getUIRetryAttempts(): number {
+    return dataManager.getPageData('common', 'retryAttempts.ui');
+  }
+
+  /**
+   * Get viewport size for specific device
+   */
+  getViewportSize(device: 'desktop' | 'tablet' | 'mobile'): { width: number; height: number } {
+    return dataManager.getPageData('common', `viewportSizes.${device}`);
+  }
+
+  /**
+   * Set viewport size for specific device
+   */
+  setViewportSize(device: 'desktop' | 'tablet' | 'mobile'): void {
+    const size = this.getViewportSize(device);
+    cy.viewport(size.width, size.height);
   }
 }
