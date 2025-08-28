@@ -1,15 +1,18 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { LoginPage, DashboardPage } from "@support/pages";
+
+const loginPage = new LoginPage();
+const dashboardPage = new DashboardPage();
 
 Given("I am on the login page", () => {
-  cy.visit("/");
+  loginPage.navigateToLogin();
 });
 
 When("I login with user id {string} and no password", (userId: string) => {
-  cy.login(userId);
+  loginPage.loginWithUsernameOnly(userId);
 });
 
 Then("I should see the dashboard", () => {
-  // Generic assertion heuristics; adapt selectors as app evolves
-  cy.contains(/dashboard|home|welcome/i, { timeout: 20000 }).should("be.visible");
+  dashboardPage.verifySuccessfulLogin("csra");
 });
 

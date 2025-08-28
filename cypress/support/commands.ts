@@ -5,6 +5,7 @@ declare global {
     interface Chainable {
       step(name: string, fn: () => void | Chainable): Chainable;
       login(username: string, password?: string): Chainable;
+      usePageObject<T>(pageClass: new () => T): T;
     }
   }
 }
@@ -33,6 +34,11 @@ Cypress.Commands.add("login", (username: string, password?: string) => {
   cy.step("Submit login", () => {
     cy.get('button[type="submit"], button:contains("Login"), input[type="submit"]').first().click();
   });
+});
+
+// New command for easy page object instantiation
+Cypress.Commands.add("usePageObject", <T>(pageClass: new () => T): T => {
+  return new pageClass();
 });
 
 export {};
